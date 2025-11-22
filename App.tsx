@@ -7,6 +7,7 @@ import { Login } from './pages/auth/Login';
 import { Register } from './pages/auth/Register';
 import { Dashboard } from './pages/Dashboard';
 import { BotWorkspace } from './pages/BotWorkspace';
+import { CreateBot } from './pages/CreateBot';
 import { Profile } from './pages/Profile';
 import { Settings } from './pages/Settings';
 
@@ -41,6 +42,7 @@ const AppRoutes = () => {
       <Route path="/" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
         <Route index element={<Navigate to="/dashboard" />} />
         <Route path="dashboard" element={<Dashboard />} />
+        <Route path="bot/new" element={<CreateBot />} />
         <Route path="bot/:id" element={<BotWorkspace />} />
         <Route path="profile" element={<Profile />} />
         <Route path="settings" element={<Settings />} />
