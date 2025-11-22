@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../lib/api';
 import { Bot } from '../../types';
-import { Button } from '../ui/Button';
-import { Input } from '../ui/Input';
-import { Save } from 'lucide-react';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
+import { Textarea } from '../ui/textarea';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
+import { Save, Loader2, CheckCircle2 } from 'lucide-react';
 
 export const BotSettings: React.FC<{ bot: Bot }> = ({ bot }) => {
   const queryClient = useQueryClient();
@@ -14,6 +17,7 @@ export const BotSettings: React.FC<{ bot: Bot }> = ({ bot }) => {
     welcome_message: ''
   });
   const [isSaved, setIsSaved] = useState(false);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     if (bot) {
@@ -30,8 +34,13 @@ export const BotSettings: React.FC<{ bot: Bot }> = ({ bot }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bot', bot.id] });
       setIsSaved(true);
+      setError('');
       setTimeout(() => setIsSaved(false), 2000);
     },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.detail || 'Failed to save settings';
+      setError(msg);
+    }
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,46 +50,81 @@ export const BotSettings: React.FC<{ bot: Bot }> = ({ bot }) => {
 
   return (
     <div className="max-w-3xl">
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold text-slate-900">General Settings</h2>
-        <p className="text-sm text-slate-500">Configure how your chatbot behaves and interacts.</p>
-      </div>
-      
-      <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg border border-slate-200">
-        <Input 
-          label="Bot Name"
-          value={formData.name}
-          onChange={(e) => setFormData({...formData, name: e.target.value})}
-        />
+      <Card className="border-slate-200 shadow-sm">
+        <CardHeader>
+          <CardTitle>Genel Ayarlar</CardTitle>
+          <CardDescription>Chatbotunuzun nasıl davranacağını ve etkileşim kuracağını yapılandırın.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="name">Bot Adı</Label>
+              <Input 
+                id="name"
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                className="max-w-md"
+              />
+            </div>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">System Instruction</label>
-          <p className="text-xs text-slate-500 mb-2">Define the persona and rules for your AI.</p>
-          <textarea
-            className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm min-h-[120px] focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g. You are a helpful support assistant. You only answer questions based on the provided context."
-            value={formData.system_instruction}
-            onChange={(e) => setFormData({...formData, system_instruction: e.target.value})}
-          />
-        </div>
+            <div className="space-y-2">
+              <Label htmlFor="system_instruction">Sistem Talimatı</Label>
+              <p className="text-[0.8rem] text-muted-foreground">
+                AI kişiliğini ve kurallarını tanımlayın.
+              </p>
+              <Textarea
+                id="system_instruction"
+                className="min-h-[150px] font-mono text-sm"
+                placeholder="Örn: Sen yardımsever bir destek asistanısın. Sadece sağlanan bağlama göre soruları cevaplarsın."
+                value={formData.system_instruction}
+                onChange={(e) => setFormData({...formData, system_instruction: e.target.value})}
+              />
+            </div>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Welcome Message</label>
-          <p className="text-xs text-slate-500 mb-2">The first message the user sees.</p>
-          <Input 
-            value={formData.welcome_message}
-            onChange={(e) => setFormData({...formData, welcome_message: e.target.value})}
-            placeholder="Hi! How can I help you today?"
-          />
-        </div>
+            <div className="space-y-2">
+              <Label htmlFor="welcome_message">Karşılama Mesajı</Label>
+              <p className="text-[0.8rem] text-muted-foreground">
+                Kullanıcının göreceği ilk mesaj.
+              </p>
+              <Input 
+                id="welcome_message"
+                value={formData.welcome_message}
+                onChange={(e) => setFormData({...formData, welcome_message: e.target.value})}
+                placeholder="Merhaba! Size nasıl yardımcı olabilirim?"
+              />
+            </div>
 
-        <div className="pt-4 flex items-center gap-4">
-          <Button type="submit" className="bg-blue-700" isLoading={updateBotMutation.isPending}>
-            <Save size={18} className="mr-2" /> Save Changes
+            {error && <div className="text-red-600 text-sm font-medium">{error}</div>}
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-between border-t border-slate-100 px-6 py-4 bg-slate-50/50">
+          <div className="flex items-center">
+             {isSaved && (
+                <span className="flex items-center text-green-600 text-sm font-medium animate-in fade-in slide-in-from-left-2">
+                  <CheckCircle2 className="w-4 h-4 mr-2" />
+                  Ayarlar başarıyla kaydedildi!
+                </span>
+             )}
+          </div>
+          <Button 
+            onClick={handleSubmit} 
+            disabled={updateBotMutation.isPending}
+            className="min-w-[140px]"
+          >
+            {updateBotMutation.isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Kaydediliyor...
+              </>
+            ) : (
+              <>
+                <Save className="mr-2 h-4 w-4" />
+                Değişiklikleri Kaydet
+              </>
+            )}
           </Button>
-          {isSaved && <span className="text-green-600 text-sm font-medium animate-fade-in">Settings saved successfully!</span>}
-        </div>
-      </form>
+        </CardFooter>
+      </Card>
     </div>
   );
 };
