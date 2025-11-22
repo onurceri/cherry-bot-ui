@@ -118,3 +118,13 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+import { User } from '../types';
+
+export const getUser = async (): Promise<User> => {
+  return api.get('/users/me');
+};
+
+export const updateUser = async (data: Partial<User>): Promise<User> => {
+  return api.patch('/users/me', data);
+};

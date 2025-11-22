@@ -54,7 +54,7 @@ export const Dashboard: React.FC = () => {
         
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-slate-900 hover:bg-slate-800 text-white shadow-lg shadow-slate-900/20 transition-all hover:scale-[1.02]">
+            <Button variant="default" className="shadow-lg transition-all hover:scale-[1.02]">
               <Plus size={18} className="mr-2" />
               Yeni Bot Oluştur
             </Button>

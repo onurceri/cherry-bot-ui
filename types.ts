@@ -36,7 +36,8 @@ export interface ChatResponse {
 export interface User {
   id: string;
   email: string;
-  // Add other user fields if necessary
+  plan_type: string;
+  created_at: string;
 }
 
 export interface AuthResponse {

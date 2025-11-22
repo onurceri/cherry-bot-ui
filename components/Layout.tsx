@@ -1,5 +1,6 @@
 import React from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+// Fixed Link import
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Bot, LogOut, LayoutDashboard, User, Settings } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -28,7 +29,7 @@ export const DashboardLayout: React.FC = () => {
       {/* Sidebar */}
       <aside className="fixed left-0 top-0 h-full w-64 bg-slate-50/50 backdrop-blur-xl border-r border-slate-200 flex flex-col z-20">
         <div className="p-6 pb-4">
-          <div className="flex items-center gap-3">
+          <Link to="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shadow-lg shadow-primary/20">
               <img src="/logo.webp" alt="CherryBot" className="w-8 h-8 object-contain" />
             </div>
@@ -36,7 +37,7 @@ export const DashboardLayout: React.FC = () => {
               <h1 className="text-base font-semibold tracking-tight text-slate-900">CherryBot</h1>
               <p className="text-xs text-slate-500 font-medium">Çalışma Alanı</p>
             </div>
-          </div>
+          </Link>
         </div>
 
         <div className="px-4 mb-2">
@@ -55,20 +56,14 @@ export const DashboardLayout: React.FC = () => {
           <div className="px-2 mt-6 mb-2 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
             Hesap
           </div>
-          <button className={cn(
-              "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 w-full text-left",
-              "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-            )}>
+          <NavLink to="/profile" className={navItemClass}>
              <User size={18} />
              Profil
-          </button>
-           <button className={cn(
-              "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 w-full text-left",
-              "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-            )}>
+          </NavLink>
+          <NavLink to="/settings" className={navItemClass}>
              <Settings size={18} />
              Ayarlar
-          </button>
+          </NavLink>
         </nav>
 
         <div className="p-4 border-t border-slate-200 bg-slate-50/80">
