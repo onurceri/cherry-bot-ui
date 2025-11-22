@@ -1,0 +1,5 @@
+{
+  "name": "TR-SiteGPT",
+  "description": "A SaaS Frontend for an AI Chatbot Builder allowing users to ingest data and chat with custom bots.",
+  "requestFramePermissions": []
+}
