@@ -18,6 +18,7 @@ export const BotSettings: React.FC<{ bot: Bot }> = ({ bot }) => {
   });
   const [isSaved, setIsSaved] = useState(false);
   const [error, setError] = useState<string>('');
+  
 
   useEffect(() => {
     if (bot) {

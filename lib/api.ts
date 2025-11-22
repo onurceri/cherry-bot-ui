@@ -128,3 +128,11 @@ export const getUser = async (): Promise<User> => {
 export const updateUser = async (data: Partial<User>): Promise<User> => {
   return api.patch('/users/me', data);
 };
+
+export const getT = async <T>(url: string): Promise<T> => {
+  return api.get(url) as unknown as Promise<T>;
+};
+
+export const postT = async <T>(url: string, data?: unknown): Promise<T> => {
+  return api.post(url, data as any) as unknown as Promise<T>;
+};

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '../../lib/api';
+import api, { postT } from '../../lib/api';
 import { Source } from '../../types';
 import { Globe, FileText, Trash2, Upload, Loader2, Link as LinkIcon } from 'lucide-react';
 import { Button } from '../ui/button';
@@ -27,9 +27,12 @@ export const KnowledgeBase: React.FC<{ botId: string }> = ({ botId }) => {
   });
 
   const addUrlMutation = useMutation({
-    mutationFn: (url: string) => api.post('/ingest/url', { bot_id: botId, url, type: 'single' }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['sources', botId] });
+    mutationFn: (url: string) => postT<Source>('/ingest/url', { bot_id: botId, url, type: 'single' }),
+    onSuccess: (created: Source) => {
+      queryClient.setQueryData<Source[] | undefined>(['sources', botId], (prev) => {
+        const list = prev ?? [];
+        return [...list, created];
+      });
       setUrlInput('');
     },
   });
