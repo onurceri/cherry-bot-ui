@@ -3,9 +3,9 @@ import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LogOut, LayoutDashboard, User, Settings, Menu, X, ChevronRight } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { Button } from './ui/button';
-import { Separator } from './ui/separator';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 export const DashboardLayout: React.FC = () => {
   const { logout } = useAuth();
