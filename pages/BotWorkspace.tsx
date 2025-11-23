@@ -6,7 +6,7 @@ import { Bot } from '../types';
 import { KnowledgeBase } from '@/components/bot/KnowledgeBase';
 import { Playground } from '@/components/bot/Playground';
 import { BotSettings } from '@/components/bot/Settings';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
 import { Loader2, Bot as BotIcon, AlertCircle, Database, MessageSquare, Settings, Sparkles, Palette } from 'lucide-react';
 import { DashboardLayout } from '@/components/Layout';
 import { cn } from '@/lib/utils';
