@@ -6,7 +6,6 @@ export interface ApiResponse<T> {
 export interface AppearanceConfig {
   primary_color: string;
   background_color: string;
-  text_color: string;
   chat_bubble_user: string;
   chat_bubble_user_text: string;
   chat_bubble_bot: string;

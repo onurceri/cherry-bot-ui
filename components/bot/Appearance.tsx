@@ -13,7 +13,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '..
 const defaultAppearance: AppearanceConfig = {
   primary_color: '#E11D48',
   background_color: '#FFFFFF',
-  text_color: '#1F2937',
   chat_bubble_user: '#E11D48',
   chat_bubble_user_text: '#FFFFFF',
   chat_bubble_bot: '#F1F5F9',
@@ -172,28 +171,7 @@ export const BotAppearance: React.FC<{ bot: Bot }> = ({ bot }) => {
                         </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="text_color">Text Rengi (Genel)</Label>
-                        <div className="flex gap-2">
-                          <Input
-                            id="text_color"
-                            type="color"
-                            value={config.text_color}
-                            onChange={(e) =>
-                              setConfig({ ...config, text_color: e.target.value })
-                            }
-                            className="h-10 w-20 p-1 cursor-pointer"
-                          />
-                          <Input
-                            type="text"
-                            value={config.text_color}
-                            onChange={(e) =>
-                              setConfig({ ...config, text_color: e.target.value })
-                            }
-                            className="flex-1 font-mono text-sm"
-                          />
-                        </div>
-                      </div>
+                      {/* Genel text rengi kaldırıldı */}
                     </div>
 
                     <div className="h-px bg-slate-100 my-4" />
@@ -536,7 +514,7 @@ export const BotAppearance: React.FC<{ bot: Bot }> = ({ bot }) => {
                         className="p-4 border-t" 
                         style={{ 
                           backgroundColor: config.background_color,
-                          borderTopColor: config.text_color + '20' // 20 = 12% opacity
+                          borderTopColor: '#1F293720'
                         }}
                       >
                         <input
@@ -546,8 +524,8 @@ export const BotAppearance: React.FC<{ bot: Bot }> = ({ bot }) => {
                           style={{ 
                             fontFamily: `'${config.font_family}', sans-serif`,
                             backgroundColor: config.background_color,
-                            color: config.text_color,
-                            border: `1px solid ${config.text_color}33`, // 33 = 20% opacity
+                            color: '#1F2937',
+                            border: '1px solid #1F293733',
                           }}
                           disabled
                         />

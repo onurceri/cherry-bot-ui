@@ -33,7 +33,7 @@ export const BotWorkspace: React.FC = () => {
             <div className="absolute inset-0 bg-rose-500/20 blur-xl rounded-full animate-pulse"></div>
             <Loader2 className="w-12 h-12 animate-spin text-rose-500 relative z-10" />
           </div>
-          <span className="mt-4 text-slate-500 font-medium animate-pulse">Bot deneyimi hazırlanıyor...</span>
+          <span className="mt-4 text-muted-foreground font-medium animate-pulse">Bot deneyimi hazırlanıyor...</span>
         </div>
       </DashboardLayout>
     );
@@ -42,12 +42,12 @@ export const BotWorkspace: React.FC = () => {
   if (error || !bot) {
     return (
       <DashboardLayout>
-        <div className="flex flex-col items-center justify-center h-[calc(100vh-100px)] text-slate-500">
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-100px)] text-muted-foreground">
           <div className="w-20 h-20 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-red-100">
              <AlertCircle size={40} />
           </div>
           <h3 className="text-2xl font-bold text-slate-900 mb-2">Bot Bulunamadı</h3>
-          <p className="text-slate-400 max-w-md text-center">Aradığınız bot silinmiş veya hiç var olmamış olabilir. Lütfen dashboard'a dönüp tekrar deneyin.</p>
+          <p className="text-muted-foreground max-w-md text-center">Aradığınız bot silinmiş veya hiç var olmamış olabilir. Lütfen dashboard'a dönüp tekrar deneyin.</p>
         </div>
       </DashboardLayout>
     );
@@ -75,7 +75,7 @@ export const BotWorkspace: React.FC = () => {
                <h1 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
                  {bot.name}
                </h1>
-               <div className="flex items-center gap-3 text-sm text-slate-500 font-medium mt-1">
+               <div className="flex items-center gap-3 text-sm text-muted-foreground font-medium mt-1">
                  <span className="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1 rounded-lg border border-slate-200/50">
                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
                    Aktif
