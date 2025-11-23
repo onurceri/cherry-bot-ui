@@ -3,14 +3,14 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import api from '../lib/api';
 import { Bot } from '../types';
-import { KnowledgeBase } from '../components/bot/KnowledgeBase';
-import { Playground } from '../components/bot/Playground';
-import { BotSettings } from '../components/bot/Settings';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { KnowledgeBase } from '@/components/bot/KnowledgeBase';
+import { Playground } from '@/components/bot/Playground';
+import { BotSettings } from '@/components/bot/Settings';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2, Bot as BotIcon, AlertCircle, Database, MessageSquare, Settings, Sparkles, Palette } from 'lucide-react';
-import { DashboardLayout } from '../components/Layout';
-import { cn } from '../lib/utils';
-import { BotAppearance } from '../components/bot/Appearance';
+import { DashboardLayout } from '@/components/Layout';
+import { cn } from '@/lib/utils';
+import { BotAppearance } from '@/components/bot/Appearance';
 
 export const BotWorkspace: React.FC = () => {
   const { id } = useParams<{ id: string }>();
