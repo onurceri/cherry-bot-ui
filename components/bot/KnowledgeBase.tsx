@@ -57,6 +57,8 @@ export const KnowledgeBase: React.FC<{ botId: string }> = ({ botId }) => {
     },
   });
 
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
   const handleUrlSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (urlInput) addUrlMutation.mutate(urlInput);
@@ -253,11 +255,28 @@ export const KnowledgeBase: React.FC<{ botId: string }> = ({ botId }) => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => deleteSourceMutation.mutate(source.id)}
+                    onClick={() => {
+                      const ok = window.confirm('Bu kaynağı silmek istediğinizden emin misiniz?');
+                      if (!ok) return;
+                      setDeletingId(source.id);
+                      deleteSourceMutation.mutate(source.id, {
+                        onSettled: () => setDeletingId(null),
+                      });
+                    }}
+                    disabled={deletingId === source.id}
                     className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 px-2"
                   >
-                    <Trash2 size={14} className="mr-1.5" />
-                    Sil
+                    {deletingId === source.id ? (
+                      <>
+                        <Loader2 size={14} className="mr-1.5 animate-spin" />
+                        Siliniyor...
+                      </>
+                    ) : (
+                      <>
+                        <Trash2 size={14} className="mr-1.5" />
+                        Sil
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>

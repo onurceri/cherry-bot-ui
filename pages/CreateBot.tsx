@@ -71,7 +71,7 @@ export const CreateBot: React.FC = () => {
                   id="bot-name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Örn: Müşteri Destek Asistanı"
+                  placeholder="Örnek: Müşteri Destek Asistanı"
                   className="h-14 text-lg px-5 bg-slate-50 border-slate-200 focus:bg-white focus-visible:ring-rose-500/20 rounded-xl transition-all shadow-sm group-hover:bg-white"
                   autoFocus
                 />

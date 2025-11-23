@@ -83,7 +83,7 @@ export const BotSettings: React.FC<{ bot: Bot }> = ({ bot }) => {
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     className="max-w-md bg-white focus-visible:ring-rose-500"
-                    placeholder="Örn: Müşteri Temsilcisi"
+                    placeholder="Örnek: Müşteri Temsilcisi"
                   />
                 </div>
               </div>
@@ -107,7 +107,7 @@ export const BotSettings: React.FC<{ bot: Bot }> = ({ bot }) => {
                     <Textarea
                       id="system_instruction"
                       className="min-h-[200px] font-mono text-sm bg-slate-50 border-slate-200 focus:bg-white focus-visible:ring-purple-500 leading-relaxed p-4"
-                      placeholder="Örn: Sen yardımsever bir asistanısın. Kullanıcılara her zaman nazik ve açıklayıcı cevaplar vermelisin. Bilmediğin konularda spekülasyon yapma."
+                      placeholder="Örnek: Sen yardımsever bir asistanısın. Kullanıcılara her zaman nazik ve açıklayıcı cevaplar vermelisin. Bilmediğin konularda spekülasyon yapma."
                       value={formData.system_instruction}
                       onChange={(e) => setFormData({...formData, system_instruction: e.target.value})}
                     />
