@@ -11,4 +11,4 @@ WORKDIR /app
 RUN npm i -g serve
 COPY --from=builder /app/dist /app/dist
 ENV PORT=3434
-CMD serve -s dist -l ${PORT}
+CMD ["serve", "-s", "dist", "-l", "${PORT}"]
