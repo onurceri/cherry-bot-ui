@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import api from '../../lib/api';
 import { Bot as BotType, ChatMessage } from '../../types';
 import { Bot, Send, RefreshCw, User, Sparkles, Zap } from 'lucide-react';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
+import { Button } from '../ui/Button';
+import { Input } from '../ui/Input';
 import { Avatar, AvatarFallback } from '../ui/avatar';
 import { cn } from '../../lib/utils';
 

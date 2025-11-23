@@ -3,8 +3,8 @@ import { getUser, updateUser } from '../lib/api';
 import { User } from '../types';
 import { Settings as SettingsIcon, Save, Loader2, AlertCircle, CheckCircle2, Mail, Shield, Bell } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
