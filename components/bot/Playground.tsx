@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import api from '../../lib/api';
 import { Bot as BotType, ChatMessage } from '../../types';
-import { Bot, Send, RefreshCw, User } from 'lucide-react';
+import { Bot, Send, RefreshCw, User, Sparkles, Zap } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Card } from '../ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Avatar, AvatarFallback } from '../ui/avatar';
 import { cn } from '../../lib/utils';
 
 const MAX_MESSAGE_CHARS = 1000;
@@ -72,19 +71,29 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
   };
 
   return (
-    <Card className="h-[600px] flex flex-col overflow-hidden border-slate-200 shadow-sm">
+    <div className="h-[700px] flex flex-col overflow-hidden rounded-3xl border border-slate-200/60 bg-white shadow-xl shadow-slate-200/40 relative">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 to-transparent pointer-events-none z-0"></div>
+      
       {/* Chat Header */}
-      <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-white/80 backdrop-blur-sm z-10">
-        <div className="flex items-center gap-3">
-          <Avatar className="h-9 w-9 border border-slate-100">
-            <AvatarFallback className="bg-primary text-primary-foreground">
-               <Bot size={18} />
-            </AvatarFallback>
-          </Avatar>
+      <div className="p-4 px-6 border-b border-slate-100 flex justify-between items-center bg-white/80 backdrop-blur-md z-10 sticky top-0">
+        <div className="flex items-center gap-4">
+          <div className="relative">
+             <Avatar className="h-10 w-10 border-2 border-white shadow-md ring-2 ring-slate-100">
+               <AvatarFallback className="bg-gradient-to-br from-rose-500 to-purple-600 text-white">
+                  <Bot size={20} />
+               </AvatarFallback>
+             </Avatar>
+             <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full animate-pulse"></div>
+          </div>
           <div>
-            <div className="text-sm font-semibold text-slate-800">{bot.name}</div>
-            <div className="text-[10px] text-green-500 font-medium flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block animate-pulse"></span> Çevrimiçi
+            <div className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+              {bot.name}
+              <span className="px-1.5 py-0.5 rounded text-[10px] bg-rose-100 text-rose-600 font-bold uppercase tracking-wider">Bot</span>
+            </div>
+            <div className="text-xs text-slate-500 font-medium flex items-center gap-1">
+              <Zap size={10} className="text-yellow-500 fill-yellow-500" />
+              Yanıtlamaya hazır
             </div>
           </div>
         </div>
@@ -92,51 +101,60 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
           variant="ghost" 
           size="icon"
           onClick={() => setMessages(bot.welcome_message ? [{role: 'assistant', content: bot.welcome_message}] : [])}
-          className="text-slate-400 hover:text-slate-600"
+          className="text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-colors"
           title="Sohbeti Sıfırla"
         >
-          <RefreshCw size={16} />
+          <RefreshCw size={18} />
         </Button>
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/50">
+      <div className="flex-1 overflow-y-auto p-6 space-y-8 bg-slate-50/30 scroll-smooth">
         {messages.map((msg, idx) => (
-          <div key={idx} className={cn("flex w-full", msg.role === 'user' ? 'justify-end' : 'justify-start')}>
-            <div className={cn("flex gap-3 max-w-[85%] md:max-w-[75%]", msg.role === 'user' ? 'flex-row-reverse' : 'flex-row')}>
-              <Avatar className="h-8 w-8 mt-1 border border-slate-100 shadow-sm">
+          <div key={idx} className={cn("flex w-full group", msg.role === 'user' ? 'justify-end' : 'justify-start')}>
+            <div className={cn("flex gap-4 max-w-[85%] md:max-w-[75%]", msg.role === 'user' ? 'flex-row-reverse' : 'flex-row')}>
+              <Avatar className={cn(
+                "h-8 w-8 mt-1 border shadow-sm shrink-0 transition-transform duration-300 group-hover:scale-110",
+                msg.role === 'user' ? "border-slate-200" : "border-rose-100"
+              )}>
                 <AvatarFallback className={cn(
                   "text-xs font-bold",
-                  msg.role === 'user' ? "bg-slate-200 text-slate-600" : "bg-primary text-primary-foreground"
+                  msg.role === 'user' ? "bg-white text-slate-600" : "bg-gradient-to-br from-rose-500 to-purple-600 text-white"
                 )}>
-                  {msg.role === 'user' ? <User size={14} /> : <Bot size={14} />}
+                  {msg.role === 'user' ? <User size={14} /> : <Sparkles size={14} />}
                 </AvatarFallback>
               </Avatar>
               
               <div className={cn(
-                "p-3.5 text-sm leading-relaxed shadow-sm animate-in fade-in zoom-in-95 duration-200 whitespace-pre-line",
+                "p-4 text-sm leading-relaxed shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-300 whitespace-pre-line relative",
                 msg.role === 'user' 
-                  ? "bg-rose-600 text-white rounded-2xl rounded-tr-sm" 
-                  : "bg-white text-slate-700 border border-slate-200 rounded-2xl rounded-tl-sm"
+                  ? "bg-slate-900 text-white rounded-2xl rounded-tr-sm" 
+                  : "bg-white text-slate-700 border border-slate-100 rounded-2xl rounded-tl-sm shadow-slate-100"
               )}>
                 {renderMessageContent(msg.content)}
+                <div className={cn(
+                  "absolute top-0 w-3 h-3",
+                  msg.role === 'user' 
+                    ? "-right-1.5 bg-slate-900 [clip-path:polygon(0_0,0%_100%,100%_0)]" 
+                    : "-left-1.5 bg-white border-l border-t border-slate-100 [clip-path:polygon(0_0,100%_0,100%_100%)]"
+                )}></div>
               </div>
             </div>
           </div>
         ))}
 
         {isTyping && (
-          <div className="flex justify-start w-full">
-             <div className="flex gap-3 max-w-[85%]">
-                <Avatar className="h-8 w-8 mt-1 border border-slate-100 shadow-sm">
-                  <AvatarFallback className="bg-primary text-primary-foreground">
-                    <Bot size={14} />
+          <div className="flex justify-start w-full animate-in fade-in slide-in-from-bottom-2">
+             <div className="flex gap-4 max-w-[85%]">
+                <Avatar className="h-8 w-8 mt-1 border border-rose-100 shadow-sm shrink-0">
+                  <AvatarFallback className="bg-gradient-to-br from-rose-500 to-purple-600 text-white">
+                    <Sparkles size={14} />
                   </AvatarFallback>
                 </Avatar>
-                <div className="bg-white border border-slate-200 px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-1.5">
-                   <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></div>
-                   <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce delay-75"></div>
-                   <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce delay-150"></div>
+                <div className="bg-white border border-slate-100 px-5 py-4 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-1.5">
+                   <div className="w-2 h-2 bg-rose-400 rounded-full animate-bounce"></div>
+                   <div className="w-2 h-2 bg-rose-400 rounded-full animate-bounce delay-75"></div>
+                   <div className="w-2 h-2 bg-rose-400 rounded-full animate-bounce delay-150"></div>
                 </div>
              </div>
           </div>
@@ -145,32 +163,36 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-white border-t border-slate-100">
-        <form onSubmit={handleSend} className="relative flex items-center gap-2">
-          <Input
-            className="flex-1 bg-slate-50 border-slate-200 focus-visible:ring-rose-500/20"
-            placeholder="Mesajınızı yazın..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            maxLength={MAX_MESSAGE_CHARS}
-          />
+      <div className="p-4 bg-white border-t border-slate-100 relative z-20">
+        <form onSubmit={handleSend} className="relative flex items-center gap-3 max-w-4xl mx-auto">
+          <div className="relative flex-1 group">
+            <Input
+              className="w-full bg-slate-50 border-slate-200 focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500 pl-4 pr-12 py-6 rounded-2xl transition-all shadow-sm group-hover:bg-white"
+              placeholder="Bot ile sohbet edin..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              maxLength={MAX_MESSAGE_CHARS}
+            />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-mono pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+              {input.length}/{MAX_MESSAGE_CHARS}
+            </div>
+          </div>
           <Button 
             type="submit"
             size="icon"
             disabled={!input.trim() || isTyping || input.length > MAX_MESSAGE_CHARS}
             className={cn(
-              "shrink-0 transition-all duration-200",
-              input.trim() ? "bg-rose-600 hover:bg-rose-700" : "bg-slate-200 text-slate-400 hover:bg-slate-200"
+              "h-12 w-12 rounded-xl shrink-0 transition-all duration-300 shadow-lg",
+              input.trim() 
+                ? "bg-gradient-to-br from-rose-500 to-purple-600 hover:shadow-rose-500/25 hover:scale-105" 
+                : "bg-slate-100 text-slate-400 shadow-none"
             )}
           >
-            <Send size={18} />
+            <Send size={20} className={cn(input.trim() && "text-white")} />
           </Button>
-          <div className="absolute right-14 -bottom-5 text-[10px] text-slate-500 font-mono">
-            {input.length}/{MAX_MESSAGE_CHARS}
-          </div>
         </form>
       </div>
-    </Card>
+    </div>
   );
 };
 
@@ -182,7 +204,7 @@ function renderMessageContent(text: string) {
   const flushList = () => {
     if (list.length > 0) {
       elements.push(
-        <ul className="list-disc pl-5 space-y-1" key={`ul-${elements.length}`}>
+        <ul className="list-disc pl-5 space-y-1 my-2" key={`ul-${elements.length}`}>
           {list.map((item, idx) => (
             <li key={`li-${elements.length}-${idx}`}>{renderInlineBold(item)}</li>
           ))}
@@ -201,9 +223,9 @@ function renderMessageContent(text: string) {
     }
     flushList();
     if (l.length === 0) {
-      elements.push(<div className="h-2" key={`br-${elements.length}`} />);
+      elements.push(<div className="h-3" key={`br-${elements.length}`} />);
     } else {
-      elements.push(<p key={`p-${elements.length}`}>{renderInlineBold(raw)}</p>);
+      elements.push(<p key={`p-${elements.length}`} className="mb-1">{renderInlineBold(raw)}</p>);
     }
   }
   flushList();
@@ -215,7 +237,7 @@ function renderInlineBold(s: string) {
   const out: React.ReactNode[] = [];
   for (let i = 0; i < parts.length; i++) {
     if (i % 2 === 1) {
-      out.push(<strong key={`b-${i}`}>{parts[i]}</strong>);
+      out.push(<strong key={`b-${i}`} className="font-bold text-slate-900">{parts[i]}</strong>);
     } else {
       out.push(parts[i]);
     }

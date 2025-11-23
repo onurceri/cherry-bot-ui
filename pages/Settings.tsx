@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUser, updateUser } from '../lib/api';
 import { User } from '../types';
-import { Settings as SettingsIcon, Save, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Settings as SettingsIcon, Save, Loader2, AlertCircle, CheckCircle2, Mail, Shield, Bell } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -53,67 +53,110 @@ export const Settings: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)]">
+        <Loader2 className="w-10 h-10 animate-spin text-rose-500 mb-4" />
+        <span className="text-slate-500 font-medium">Ayarlar yükleniyor...</span>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold tracking-tight">Ayarlar</h2>
-        <p className="text-muted-foreground">Hesap tercihlerinizi ve ayarlarınızı yönetin.</p>
+    <div className="max-w-3xl mx-auto space-y-8">
+      <div className="flex items-center gap-4">
+        <div className="p-3 bg-white rounded-2xl shadow-sm border border-slate-100 text-slate-700">
+          <SettingsIcon size={24} />
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">Hesap Ayarları</h2>
+          <p className="text-slate-500 font-medium">Hesap tercihlerinizi ve kişisel bilgilerinizi yönetin.</p>
+        </div>
       </div>
-      <Separator />
 
       {message && (
-        <Alert variant={message.type === 'error' ? 'destructive' : 'default'} className={message.type === 'success' ? 'border-green-200 bg-green-50 text-green-800' : ''}>
-          {message.type === 'error' ? <AlertCircle className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4 text-green-600" />}
-          <AlertTitle>{message.type === 'error' ? 'Hata' : 'Başarılı'}</AlertTitle>
-          <AlertDescription>
+        <Alert variant={message.type === 'error' ? 'destructive' : 'default'} className={`rounded-xl border shadow-sm animate-in fade-in slide-in-from-top-2 ${message.type === 'success' ? 'border-green-200 bg-green-50 text-green-800' : ''}`}>
+          {message.type === 'error' ? <AlertCircle className="h-5 w-5" /> : <CheckCircle2 className="h-5 w-5 text-green-600" />}
+          <AlertTitle className="font-bold ml-2">{message.type === 'error' ? 'Hata' : 'Başarılı'}</AlertTitle>
+          <AlertDescription className="ml-2 font-medium opacity-90">
             {message.text}
           </AlertDescription>
         </Alert>
       )}
 
-      <div className="grid gap-6 max-w-2xl">
+      <div className="grid gap-8">
         <form onSubmit={handleSave}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <SettingsIcon className="w-5 h-5" />
-                Hesap Ayarları
+          <Card className="border-slate-200 shadow-lg shadow-slate-200/40 rounded-3xl overflow-hidden bg-white/80 backdrop-blur-sm">
+            <CardHeader className="bg-slate-50/50 border-b border-slate-100 pb-6">
+              <CardTitle className="flex items-center gap-2 text-lg font-bold text-slate-800">
+                <Mail className="w-5 h-5 text-rose-500" />
+                İletişim Bilgileri
               </CardTitle>
-              <CardDescription>İletişim bilgilerinizi güncelleyin.</CardDescription>
+              <CardDescription className="text-slate-500">
+                Giriş yapmak ve bildirim almak için kullandığınız e-posta adresi.
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <CardContent className="p-8 space-y-6">
+              <div className="space-y-3">
+                <label htmlFor="email" className="text-sm font-bold text-slate-700 ml-1">
                   E-posta Adresi
                 </label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ornek@email.com"
-                  required
-                />
-                <p className="text-[0.8rem] text-muted-foreground">
-                  Bu e-posta adresi giriş yapmak ve bildirimler için kullanılacaktır.
+                <div className="relative">
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="ornek@email.com"
+                    required
+                    className="h-12 bg-slate-50 border-slate-200 focus:bg-white focus-visible:ring-rose-500/20 rounded-xl transition-all pl-11"
+                  />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                </div>
+                <p className="text-xs text-slate-400 font-medium ml-1 flex items-center gap-1.5">
+                  <Shield size={12} />
+                  E-posta adresiniz gizli tutulur ve asla 3. taraflarla paylaşılmaz.
                 </p>
               </div>
             </CardContent>
-            <CardFooter className="border-t bg-slate-50/50 px-6 py-4">
-              <Button type="submit" disabled={saving || email === user?.email}>
-                {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {!saving && <Save className="mr-2 h-4 w-4" />}
-                Değişiklikleri Kaydet
+            <CardFooter className="border-t border-slate-100 bg-slate-50/30 px-8 py-6 flex justify-end">
+              <Button 
+                type="submit" 
+                disabled={saving || email === user?.email}
+                className="h-11 px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-xl shadow-lg shadow-slate-900/10 transition-all hover:-translate-y-0.5"
+              >
+                {saving ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Kaydediliyor...
+                  </>
+                ) : (
+                  <>
+                    <Save className="mr-2 h-4 w-4" />
+                    Değişiklikleri Kaydet
+                  </>
+                )}
               </Button>
             </CardFooter>
           </Card>
         </form>
+
+        {/* Future Settings Section Placeholder */}
+        <Card className="border-slate-200 shadow-sm rounded-3xl overflow-hidden opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-not-allowed relative">
+           <div className="absolute inset-0 z-10 bg-white/10 backdrop-blur-[1px] flex items-center justify-center">
+             <span className="bg-slate-900 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg">Çok Yakında</span>
+           </div>
+           <CardHeader className="bg-slate-50/50 border-b border-slate-100 pb-6">
+              <CardTitle className="flex items-center gap-2 text-lg font-bold text-slate-800">
+                <Bell className="w-5 h-5 text-purple-500" />
+                Bildirim Tercihleri
+              </CardTitle>
+              <CardDescription>
+                Hangi konularda bildirim almak istediğinizi seçin.
+              </CardDescription>
+           </CardHeader>
+           <CardContent className="p-8">
+             <div className="h-20 bg-slate-50 rounded-xl border border-dashed border-slate-200"></div>
+           </CardContent>
+        </Card>
       </div>
     </div>
   );
