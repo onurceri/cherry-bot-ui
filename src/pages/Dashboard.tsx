@@ -5,7 +5,7 @@ import api from '../lib/api';
 import { Bot } from '../types';
 import { Plus, MessageSquare, Loader2, ArrowRight, Trash2, MoreVertical, Activity, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 export const Dashboard: React.FC = () => {

@@ -2,7 +2,8 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --no-audit --no-fund
+RUN apk add --no-cache libc6-compat \
+  && npm ci --no-audit --no-fund
 COPY . .
 RUN npm run build
 
@@ -11,4 +12,6 @@ WORKDIR /app
 RUN npm i -g serve
 COPY --from=builder /app/dist /app/dist
 ENV PORT=3434
-CMD ["serve", "-s", "dist", "-l", "${PORT}"]
+ENV NODE_ENV=production
+EXPOSE 3434
+CMD ["sh", "-c", "serve -s dist -l ${PORT}"]

@@ -9,7 +9,6 @@ import { BotSettings } from '@/components/bot/Settings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2, Bot as BotIcon, AlertCircle, Database, MessageSquare, Settings, Sparkles, Palette } from 'lucide-react';
 import { DashboardLayout } from '@/components/Layout';
-import { cn } from '@/lib/utils';
 import { BotAppearance } from '@/components/bot/Appearance';
 
 export const BotWorkspace: React.FC = () => {

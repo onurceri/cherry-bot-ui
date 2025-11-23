@@ -41,7 +41,7 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
           const clean = Array.isArray(items) ? items.filter((x) => typeof x === 'string').slice(0, 3) : [];
           setSuggested(clean);
         }
-      } catch (e) {
+      } catch {
         if (!mounted) return;
         setHasReadySource(false);
       }

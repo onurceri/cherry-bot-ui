@@ -8,8 +8,8 @@ const api = axios.create({
 
 let isRefreshing = false;
 let failedQueue: Array<{
-  resolve: (value?: unknown) => void;
-  reject: (reason?: unknown) => void;
+  resolve: (_value?: unknown) => void;
+  reject: (_reason?: unknown) => void;
 }> = [];
 
 const processQueue = (error: Error | null, token: string | null = null) => {

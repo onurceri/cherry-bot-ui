@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api, { postT } from '../../lib/api';
 import { Source } from '../../types';
-import { Globe, FileText, Trash2, Upload, Loader2, Link as LinkIcon, CheckCircle2, XCircle, Clock, Database } from 'lucide-react';
+import { Globe, FileText, Trash2, Upload, Loader2, CheckCircle2, XCircle, Clock, Database } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { cn } from '../../lib/utils';
 
 export const KnowledgeBase: React.FC<{ botId: string }> = ({ botId }) => {

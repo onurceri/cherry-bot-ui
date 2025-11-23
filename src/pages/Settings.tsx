@@ -5,7 +5,6 @@ import { Settings as SettingsIcon, Save, Loader2, AlertCircle, CheckCircle2, Mai
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const Settings: React.FC = () => {

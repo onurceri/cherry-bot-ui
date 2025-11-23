@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { getUser } from '../lib/api';
 import { User } from '../types';
 import { Mail, Calendar, CreditCard, User as UserIcon, Loader2, Shield, Star } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 export const Profile: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
