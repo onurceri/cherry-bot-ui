@@ -89,7 +89,7 @@ export const KnowledgeBase: React.FC<{ botId: string }> = ({ botId }) => {
   };
 
   return (
-    <div className="space-y-8 max-w-6xl mx-auto">
+    <div className="space-y-6 md:space-y-8 max-w-6xl mx-auto">
       {/* Action Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* URL Card */}
@@ -106,12 +106,12 @@ export const KnowledgeBase: React.FC<{ botId: string }> = ({ botId }) => {
             <Globe className="w-32 h-32 text-rose-500 transform rotate-12 translate-x-8 -translate-y-8" />
           </div>
           
-          <div className="p-8 relative z-10">
-            <div className="w-14 h-14 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
+          <div className="p-6 md:p-8 relative z-10">
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center mb-4 md:mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
               <Globe size={28} />
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">Web Sitesi Ekle</h3>
-            <p className="text-slate-500 mb-6">Herhangi bir web sayfasının içeriğini botunuza öğretin.</p>
+            <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-2">Web Sitesi Ekle</h3>
+            <p className="text-slate-500 mb-4 md:mb-6">Herhangi bir web sayfasının içeriğini botunuza öğretin.</p>
             
             {activeMode === 'url' ? (
               <form onSubmit={handleUrlSubmit} className="flex gap-2 animate-in fade-in slide-in-from-bottom-2" onClick={e => e.stopPropagation()}>
@@ -163,11 +163,11 @@ export const KnowledgeBase: React.FC<{ botId: string }> = ({ botId }) => {
             <FileText className="w-32 h-32 text-purple-500 transform -rotate-12 translate-x-8 -translate-y-8" />
           </div>
           
-          <div className="p-8 relative z-10">
-            <div className="w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
+          <div className="p-6 md:p-8 relative z-10">
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-4 md:mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
               <Upload size={28} />
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">Dosya Yükle</h3>
+            <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-2">Dosya Yükle</h3>
             <p className="text-slate-500 mb-6">
               {isDragging ? "Dosyayı buraya bırakın!" : "PDF, Word veya Metin belgelerinizi yükleyerek eğitin."}
             </p>
@@ -264,7 +264,7 @@ export const KnowledgeBase: React.FC<{ botId: string }> = ({ botId }) => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-white/50 rounded-3xl border border-dashed border-slate-300">
+          <div className="text-center py-14 md:py-20 bg-white/50 rounded-3xl border border-dashed border-slate-300">
             <div className="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-4">
               <Database size={32} />
             </div>

@@ -97,12 +97,12 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
   };
 
   return (
-    <div className="h-[700px] flex flex-col overflow-hidden rounded-3xl border border-slate-200/60 bg-white shadow-xl shadow-slate-200/40 relative">
+    <div className="min-h-[520px] h-[calc(100vh-280px)] md:h-[calc(100vh-300px)] lg:h-[calc(100vh-320px)] flex flex-col overflow-hidden rounded-3xl border border-slate-200/60 bg-white shadow-xl shadow-slate-200/40 relative">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 to-transparent pointer-events-none z-0"></div>
       
       {/* Chat Header */}
-      <div className="p-4 px-6 border-b border-slate-100 flex justify-between items-center bg-white/80 backdrop-blur-md z-10 sticky top-0">
+      <div className="p-3 md:p-4 md:px-6 border-b border-slate-100 flex justify-between items-center bg-white/80 backdrop-blur-md z-10 sticky top-0">
         <div className="flex items-center gap-4">
           <div className="relative">
              <Avatar className="h-10 w-10 border-2 border-white shadow-md ring-2 ring-slate-100">
@@ -135,7 +135,7 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-8 bg-slate-50/30 scroll-smooth">
+      <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 md:space-y-8 bg-slate-50/30 scroll-smooth">
         {messages.map((msg, idx) => (
           <div key={idx} className={cn("flex w-full group", msg.role === 'user' ? 'justify-end' : 'justify-start')}>
             <div className={cn("flex gap-4 max-w-[85%] md:max-w-[75%]", msg.role === 'user' ? 'flex-row-reverse' : 'flex-row')}>
@@ -189,7 +189,7 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-white border-t border-slate-100 relative z-20">
+      <div className="p-3 md:p-4 bg-white border-t border-slate-100 relative z-20">
         {hasReadySource && suggested.length > 0 && (
           <div className="max-w-4xl mx-auto mb-3">
             <div className="flex flex-wrap gap-2 overflow-x-auto py-1 -mx-1 px-1">
@@ -209,7 +209,7 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
         <form onSubmit={handleSend} className="relative flex items-center gap-3 max-w-4xl mx-auto">
           <div className="relative flex-1 group">
             <Input
-              className="w-full bg-slate-50 border-slate-200 focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500 pl-4 pr-12 py-6 rounded-2xl transition-all shadow-sm group-hover:bg-white"
+              className="w-full bg-slate-50 border-slate-200 focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500 pl-4 pr-12 py-4 md:py-6 rounded-2xl transition-all shadow-sm group-hover:bg-white"
               placeholder="Bot ile sohbet edin..."
               value={input}
               onChange={(e) => setInput(e.target.value)}

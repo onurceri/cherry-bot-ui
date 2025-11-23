@@ -422,7 +422,7 @@ export const BotAppearance: React.FC<{ bot: Bot }> = ({ bot }) => {
 
         {/* Right Panel - Live Preview */}
         <div className="space-y-6">
-          <Card className="border-slate-200 shadow-lg sticky top-8">
+          <Card className="border-slate-200 shadow-lg sticky top-4">
             <CardHeader className="border-b border-slate-100 bg-slate-50/50">
               <CardTitle className="text-base">Canlı Önizleme</CardTitle>
               <CardDescription className="text-xs">
@@ -432,7 +432,7 @@ export const BotAppearance: React.FC<{ bot: Bot }> = ({ bot }) => {
 
             <CardContent className="p-0">
               {/* Mock website preview */}
-              <div className="h-[600px] bg-gradient-to-br from-slate-100 to-slate-200 relative overflow-hidden">
+              <div className="h-[420px] md:h-[500px] bg-gradient-to-br from-slate-100 to-slate-200 relative overflow-hidden">
                 {/* Mock website content */}
                 <div className="p-8 space-y-4">
                   <div className="h-8 bg-white/60 rounded w-3/4" />
@@ -451,7 +451,7 @@ export const BotAppearance: React.FC<{ bot: Bot }> = ({ bot }) => {
                   {/* Chat Window (if open) */}
                   {isPreviewOpen && (
                     <div
-                      className="w-80 h-96 rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4"
+                      className="w-72 md:w-80 h-72 md:h-80 rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4"
                       style={{
                         backgroundColor: config.background_color,
                         fontFamily: `'${config.font_family}', sans-serif`,
@@ -479,7 +479,7 @@ export const BotAppearance: React.FC<{ bot: Bot }> = ({ bot }) => {
                       </div>
 
                       {/* Messages */}
-                      <div className="p-4 space-y-3 h-56 overflow-y-auto">
+                      <div className="p-4 space-y-3 h-40 md:h-48 overflow-y-auto">
                         {/* Bot message */}
                         <div className="flex gap-2">
                           <div

@@ -54,29 +54,29 @@ export const BotWorkspace: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/50 -m-8 p-8">
+    <div className="bg-slate-50/50">
       {/* Hero Section / Header */}
-      <div className="relative mb-8">
+      <div className="relative mb-4 md:mb-6">
         <div className="absolute inset-0 bg-gradient-to-r from-rose-100/50 via-purple-100/30 to-blue-100/30 blur-3xl -z-10 rounded-3xl" />
         
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 bg-white/40 backdrop-blur-xl p-6 rounded-3xl border border-white/50 shadow-sm">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4 bg-white/40 backdrop-blur-xl p-3 md:p-4 rounded-3xl border border-white/50 shadow-sm">
           <div className="flex items-center gap-5">
              <div className="relative group">
                <div className="absolute inset-0 bg-gradient-to-br from-rose-500 to-purple-600 rounded-2xl blur opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
-               <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-500 to-purple-600 flex items-center justify-center text-white shadow-xl ring-4 ring-white">
-                 <BotIcon size={32} className="drop-shadow-md" />
+               <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-rose-500 to-purple-600 flex items-center justify-center text-white shadow-xl ring-1 md:ring-2 ring-white">
+                 <BotIcon className="w-5 h-5 md:w-7 md:h-7 drop-shadow-md" />
                </div>
-               <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full flex items-center justify-center">
-                 <Sparkles size={10} className="text-white" />
+               <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 border-2 border-white rounded-full flex items-center justify-center">
+                 <Sparkles className="w-2.5 h-2.5 text-white" />
                </div>
              </div>
              
              <div>
-               <h1 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+               <h1 className="text-xl md:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
                  {bot.name}
                </h1>
-               <div className="flex items-center gap-3 text-sm text-muted-foreground font-medium mt-1">
-                 <span className="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1 rounded-lg border border-slate-200/50">
+               <div className="flex items-center gap-1.5 md:gap-2 text-[11px] md:text-xs text-muted-foreground font-medium mt-0.5">
+                 <span className="flex items-center gap-1.5 bg-slate-100/80 px-1.5 py-0.5 md:px-2 md:py-1 rounded-lg border border-slate-200/50">
                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
                    Aktif
                  </span>
@@ -92,35 +92,35 @@ export const BotWorkspace: React.FC = () => {
       </div>
 
       {/* Main Content Area */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full space-y-8">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full space-y-6">
         <div className="flex justify-center">
-          <TabsList className="bg-white/60 backdrop-blur-md p-1.5 rounded-full border border-slate-200/60 shadow-lg shadow-slate-200/40 inline-flex">
+          <TabsList className="bg-white/60 backdrop-blur-md p-1 rounded-full border border-slate-200/60 shadow-lg shadow-slate-200/40 inline-flex">
             <TabsTrigger 
               value="knowledge" 
-              className="rounded-full px-6 py-2.5 data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300 flex items-center gap-2"
+              className="rounded-full px-3 py-1.5 md:px-5 md:py-2 data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300 flex items-center gap-2"
             >
-              <Database size={16} />
+              <Database className="w-3.5 h-3.5 md:w-4 md:h-4" />
               Bilgi Bankası
             </TabsTrigger>
             <TabsTrigger 
               value="playground" 
-              className="rounded-full px-6 py-2.5 data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300 flex items-center gap-2"
+              className="rounded-full px-3 py-1.5 md:px-5 md:py-2 data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300 flex items-center gap-2"
             >
-              <MessageSquare size={16} />
+              <MessageSquare className="w-3.5 h-3.5 md:w-4 md:h-4" />
               Test Ortamı
             </TabsTrigger>
             <TabsTrigger 
               value="appearance" 
-              className="rounded-full px-6 py-2.5 data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300 flex items-center gap-2"
+              className="rounded-full px-3 py-1.5 md:px-5 md:py-2 data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300 flex items-center gap-2"
             >
-              <Palette size={16} />
+              <Palette className="w-3.5 h-3.5 md:w-4 md:h-4" />
               Görünüm
             </TabsTrigger>
             <TabsTrigger 
               value="settings" 
-              className="rounded-full px-6 py-2.5 data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300 flex items-center gap-2"
+              className="rounded-full px-3 py-1.5 md:px-5 md:py-2 data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300 flex items-center gap-2"
             >
-              <Settings size={16} />
+              <Settings className="w-3.5 h-3.5 md:w-4 md:h-4" />
               Ayarlar
             </TabsTrigger>
           </TabsList>

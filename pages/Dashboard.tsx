@@ -104,7 +104,7 @@ export const Dashboard: React.FC = () => {
                 </div>
                 
                 <Link to={`/bot/${bot.id}`} className="w-full">
-                  <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white shadow-lg shadow-slate-900/20 rounded-xl group-hover:translate-y-[-2px] transition-all duration-300">
+                  <Button className="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white shadow-lg shadow-rose-500/30 rounded-xl group-hover:translate-y-[-2px] transition-all duration-300">
                     Botu Yönet <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
