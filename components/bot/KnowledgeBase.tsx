@@ -180,8 +180,8 @@ export const KnowledgeBase: React.FC<{ botId: string }> = ({ botId }) => {
                   accept=".pdf,.txt,.docx,.md"
                   onClick={(e) => e.stopPropagation()}
                 />
-               <div className="text-purple-600 font-medium flex items-center text-sm group-hover:translate-x-1 transition-transform">
-                  {isDragging ? "Bırakın yüklesin" : "Dosya seçmek için tıklayın veya sürükleyin"} <span className="ml-1">→</span>
+               <div className="text-rose-600 font-medium flex items-center text-sm group-hover:translate-x-1 transition-transform">
+                  {isDragging ? "Bırakın yüklesin" : "Başlamak için tıklayın"} <span className="ml-1">→</span>
                </div>
             </div>
             

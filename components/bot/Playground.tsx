@@ -13,6 +13,8 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [suggested, setSuggested] = useState<string[]>([]);
+  const [hasReadySource, setHasReadySource] = useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,6 +26,30 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const sources: any[] = await api.get(`/ingest/${bot.id}`);
+        const ready = Array.isArray(sources) && sources.some((s) => (s?.status || '') === 'ready');
+        if (!mounted) return;
+        setHasReadySource(!!ready);
+        if (ready) {
+          const items: string[] = await api.get(`/bots/${bot.id}/suggested-questions`);
+          if (!mounted) return;
+          const clean = Array.isArray(items) ? items.filter((x) => typeof x === 'string').slice(0, 3) : [];
+          setSuggested(clean);
+        }
+      } catch (e) {
+        if (!mounted) return;
+        setHasReadySource(false);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [bot.id]);
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -164,6 +190,22 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
 
       {/* Input Area */}
       <div className="p-4 bg-white border-t border-slate-100 relative z-20">
+        {hasReadySource && suggested.length > 0 && (
+          <div className="max-w-4xl mx-auto mb-3">
+            <div className="flex flex-wrap gap-2 overflow-x-auto py-1 -mx-1 px-1">
+              {suggested.map((q, i) => (
+                <button
+                  key={`sugg-${i}`}
+                  type="button"
+                  onClick={() => setInput(q)}
+                  className="px-3 py-2 text-xs md:text-sm rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors whitespace-nowrap"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
         <form onSubmit={handleSend} className="relative flex items-center gap-3 max-w-4xl mx-auto">
           <div className="relative flex-1 group">
             <Input
