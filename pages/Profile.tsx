@@ -67,13 +67,6 @@ export const Profile: React.FC = () => {
                 <span className="text-sm font-medium">{user.email}</span>
               </div>
             </div>
-            
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-muted-foreground">Kullanıcı ID</label>
-              <div className="p-2 bg-slate-50 rounded-md border border-slate-100 font-mono text-xs text-slate-500 break-all">
-                {user.id}
-              </div>
-            </div>
           </CardContent>
         </Card>
 

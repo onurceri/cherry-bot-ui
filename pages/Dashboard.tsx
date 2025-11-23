@@ -17,6 +17,14 @@ export const Dashboard: React.FC = () => {
   });
 
   // Bot oluşturma artık ayrı bir sayfada yönetiliyor
+  const deleteMutation = useMutation({
+    mutationFn: async (botId: string) => {
+      return api.delete(`/bots/${botId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bots'] });
+    },
+  });
 
   return (
     <div className="space-y-8">
@@ -60,11 +68,25 @@ export const Dashboard: React.FC = () => {
                 <div className="text-xs text-slate-400 font-medium">
                   Oluşturulma: {new Date(bot.created_at).toLocaleDateString('tr-TR')}
                 </div>
-                <Link to={`/bot/${bot.id}`} className="w-full">
-                  <Button variant="outline" className="w-full group-hover:border-slate-300 group-hover:bg-slate-50">
-                    Botu Yönet <ArrowRight size={16} className="ml-2 group-hover:translate-x-0.5 transition-transform" />
+                <div className="flex gap-2">
+                  <Link to={`/bot/${bot.id}`} className="flex-1">
+                    <Button variant="outline" className="w-full group-hover:border-slate-300 group-hover:bg-slate-50">
+                      Botu Yönet <ArrowRight size={16} className="ml-2 group-hover:translate-x-0.5 transition-transform" />
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="destructive"
+                    className="min-w-[88px]"
+                    disabled={deleteMutation.isPending}
+                    onClick={() => deleteMutation.mutate(bot.id)}
+                  >
+                    {deleteMutation.isPending ? (
+                      <span className="flex items-center gap-2"><Loader2 className="h-4 w-4 animate-spin" /> Siliniyor</span>
+                    ) : (
+                      'Sil'
+                    )}
                   </Button>
-                </Link>
+                </div>
               </CardFooter>
             </Card>
           ))}

@@ -8,6 +8,8 @@ import { Card } from '../ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { cn } from '../../lib/utils';
 
+const MAX_MESSAGE_CHARS = 1000;
+
 export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
@@ -27,6 +29,11 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
+    if (input.length > MAX_MESSAGE_CHARS) {
+      const errorMsg: ChatMessage = { role: 'assistant', content: `Mesaj çok uzun. Maksimum ${MAX_MESSAGE_CHARS} karakter.` };
+      setMessages(prev => [...prev, errorMsg]);
+      return;
+    }
 
     const userMsg: ChatMessage = { role: 'user', content: input };
     setMessages(prev => [...prev, userMsg]);
@@ -48,7 +55,15 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
       setMessages(prev => [...prev, aiMsg]);
     } catch (error: any) {
       const is401 = error?.response?.status === 401;
-      const msg = is401 ? 'Oturum süresi doldu veya yetkisiz erişim. Lütfen tekrar giriş yapın.' : 'Üzgünüm, buna yanıt verirken bir hatayla karşılaştım.';
+      const is422 = error?.response?.status === 422;
+      const is429 = error?.response?.status === 429;
+      const msg = is401
+        ? 'Oturum süresi doldu veya yetkisiz erişim. Lütfen tekrar giriş yapın.'
+        : is422
+          ? `Mesaj çok uzun. Maksimum ${MAX_MESSAGE_CHARS} karakter.`
+          : is429
+            ? 'Bu oturum için mesaj limitine ulaşıldı.'
+          : 'Üzgünüm, buna yanıt verirken bir hatayla karşılaştım.';
       const errorMsg: ChatMessage = { role: 'assistant', content: msg };
       setMessages(prev => [...prev, errorMsg]);
     } finally {
@@ -99,12 +114,12 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
               </Avatar>
               
               <div className={cn(
-                "p-3.5 text-sm leading-relaxed shadow-sm animate-in fade-in zoom-in-95 duration-200",
+                "p-3.5 text-sm leading-relaxed shadow-sm animate-in fade-in zoom-in-95 duration-200 whitespace-pre-line",
                 msg.role === 'user' 
                   ? "bg-rose-600 text-white rounded-2xl rounded-tr-sm" 
                   : "bg-white text-slate-700 border border-slate-200 rounded-2xl rounded-tl-sm"
               )}>
-                {msg.content}
+                {renderMessageContent(msg.content)}
               </div>
             </div>
           </div>
@@ -137,11 +152,12 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
             placeholder="Mesajınızı yazın..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            maxLength={MAX_MESSAGE_CHARS}
           />
           <Button 
             type="submit"
             size="icon"
-            disabled={!input.trim() || isTyping}
+            disabled={!input.trim() || isTyping || input.length > MAX_MESSAGE_CHARS}
             className={cn(
               "shrink-0 transition-all duration-200",
               input.trim() ? "bg-rose-600 hover:bg-rose-700" : "bg-slate-200 text-slate-400 hover:bg-slate-200"
@@ -149,8 +165,60 @@ export const Playground: React.FC<{ bot: BotType }> = ({ bot }) => {
           >
             <Send size={18} />
           </Button>
+          <div className="absolute right-14 -bottom-5 text-[10px] text-slate-500 font-mono">
+            {input.length}/{MAX_MESSAGE_CHARS}
+          </div>
         </form>
       </div>
     </Card>
   );
 };
+
+function renderMessageContent(text: string) {
+  const lines = text.split(/\r?\n/);
+  const elements: React.ReactNode[] = [];
+  let list: string[] = [];
+
+  const flushList = () => {
+    if (list.length > 0) {
+      elements.push(
+        <ul className="list-disc pl-5 space-y-1" key={`ul-${elements.length}`}>
+          {list.map((item, idx) => (
+            <li key={`li-${elements.length}-${idx}`}>{renderInlineBold(item)}</li>
+          ))}
+        </ul>
+      );
+      list = [];
+    }
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const raw = lines[i];
+    const l = raw.trim();
+    if (/^(\*|-)\s+/.test(l)) {
+      list.push(l.replace(/^(\*|-)\s+/, ''));
+      continue;
+    }
+    flushList();
+    if (l.length === 0) {
+      elements.push(<div className="h-2" key={`br-${elements.length}`} />);
+    } else {
+      elements.push(<p key={`p-${elements.length}`}>{renderInlineBold(raw)}</p>);
+    }
+  }
+  flushList();
+  return <>{elements}</>;
+}
+
+function renderInlineBold(s: string) {
+  const parts = s.split(/\*\*([^*]+)\*\*/);
+  const out: React.ReactNode[] = [];
+  for (let i = 0; i < parts.length; i++) {
+    if (i % 2 === 1) {
+      out.push(<strong key={`b-${i}`}>{parts[i]}</strong>);
+    } else {
+      out.push(parts[i]);
+    }
+  }
+  return <>{out}</>;
+}
