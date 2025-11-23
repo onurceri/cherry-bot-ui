@@ -7,9 +7,10 @@ import { KnowledgeBase } from '../components/bot/KnowledgeBase';
 import { Playground } from '../components/bot/Playground';
 import { BotSettings } from '../components/bot/Settings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Loader2, Bot as BotIcon, AlertCircle, Database, MessageSquare, Settings, Sparkles } from 'lucide-react';
+import { Loader2, Bot as BotIcon, AlertCircle, Database, MessageSquare, Settings, Sparkles, Palette } from 'lucide-react';
 import { DashboardLayout } from '../components/Layout';
 import { cn } from '../lib/utils';
+import { BotAppearance } from '../components/bot/Appearance';
 
 export const BotWorkspace: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -109,6 +110,13 @@ export const BotWorkspace: React.FC = () => {
               Test Ortamı
             </TabsTrigger>
             <TabsTrigger 
+              value="appearance" 
+              className="rounded-full px-6 py-2.5 data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300 flex items-center gap-2"
+            >
+              <Palette size={16} />
+              Görünüm
+            </TabsTrigger>
+            <TabsTrigger 
               value="settings" 
               className="rounded-full px-6 py-2.5 data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300 flex items-center gap-2"
             >
@@ -124,6 +132,9 @@ export const BotWorkspace: React.FC = () => {
           </TabsContent>
           <TabsContent value="playground" className="mt-0 focus-visible:outline-none">
             <Playground bot={bot} />
+          </TabsContent>
+          <TabsContent value="appearance" className="mt-0 focus-visible:outline-none">
+            <BotAppearance bot={bot} />
           </TabsContent>
           <TabsContent value="settings" className="mt-0 focus-visible:outline-none">
             <BotSettings bot={bot} />

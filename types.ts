@@ -3,6 +3,21 @@ export interface ApiResponse<T> {
   status: string;
 }
 
+export interface AppearanceConfig {
+  primary_color: string;
+  background_color: string;
+  text_color: string;
+  chat_bubble_user: string;
+  chat_bubble_user_text: string;
+  chat_bubble_bot: string;
+  chat_bubble_bot_text: string;
+  font_family: string;
+  logo_url?: string;
+  launcher_icon: string;
+  position: 'bottom-right' | 'bottom-left';
+  auto_open: boolean;
+}
+
 export interface Bot {
   id: string;
   user_id: string;
@@ -11,6 +26,7 @@ export interface Bot {
   system_instruction?: string;
   welcome_message?: string;
   is_active: boolean;
+  appearance_config?: AppearanceConfig;
   created_at: string;
 }
 
